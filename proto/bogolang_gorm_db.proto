@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+import "protoc-gen-gorm/options/gorm.proto";
+
+package proto;
+option go_package = "./pb";
+
+message User {
+  option (gorm.opts).ormable = true;
+  option (gorm.opts).table = "users";
+  uint64 id = 1 [(gorm.field).tag = {primary_key: true not_null: true}];
+  uint64 role_id = 2 [(gorm.field).tag = {not_null: true}];
+  string name = 3 [(gorm.field).tag = {not_null: true}];
+  string email = 4 [(gorm.field).tag = {not_null: true unique: true}];
+  string password = 5 [(gorm.field).tag = {not_null: true}];
+  google.protobuf.Timestamp last_access = 6;
+}
+
+message Roles {
+  option (gorm.opts).ormable = true;
+  option (gorm.opts).table = "roles";
+  uint64 id = 1 [(gorm.field).tag = {primary_key: true not_null: true}];
+  uint64 role_name = 2 [(gorm.field).tag = {not_null: true}];
+}
+
+message Role_rights {
+  option (gorm.opts).ormable = true;
+  option (gorm.opts).table = "roles_right";
+  uint64 id = 1 [(gorm.field).tag = {primary_key: true not_null: true}];
+  string section = 2 [(gorm.field).tag = {not_null: true}];
+  string route = 3 [(gorm.field).tag = {not_null: true}];
+  uint64 r_create = 4 [(gorm.field).tag = {not_null: true}];
+  uint64 r_read = 5 [(gorm.field).tag = {not_null: true}];
+  uint64 r_update = 6 [(gorm.field).tag = {not_null: true}];
+  uint64 r_delete = 7 [(gorm.field).tag = {not_null: true}];
+}

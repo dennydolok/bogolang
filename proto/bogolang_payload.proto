@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+import "google/api/field_behavior.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "mwitkow/go-proto-validators/validator.proto";
+import "google/protobuf/timestamp.proto";
+
+package proto;
+option go_package = "./pb";
+
+message LoginRequest{
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse{
+  bool status = 1;
+  string message = 2;
+  DataLogin data = 3;
+}
+
+message DataLogin {
+  string access_token = 1;
+}
+
+message GetAllUserResponse {
+  bool status = 1;
+  string message = 2;
+  UserData data = 3;
+}
+
+message GetAllUserRequest{}
+
+message UserData {
+  uint32 role_id = 1;
+  string role_name = 2;
+  string name = 3;
+  string email = 4;
+  google.protobuf.Timestamp last_access = 5;
+}
+
+message CreateUserRequest {
+  uint32 role_id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message CreateUserResponse {
+  bool status = 1;
+  string message = 2;
+}
+
+message UpdateUserRequest {
+  string name = 1;
+}
+
+message UpdateUserResponse {
+  bool status = 1;
+  string message = 2;
+}
+
+message DeleteUserRequest {
+  uint32 user_id = 1;
+}
+
+message DeleteUserResponse {
+  bool status = 1;
+  bool message = 2;
+}
